@@ -11,7 +11,7 @@ const rightArrowPosition = {
     x: canvasWidth - canvasWidth/5,
     y: canvasHeight/2 - 50,
 }
-
+const controlCircleSize = 50
 let circlePositions
 let randomImagePositions
 
@@ -32,7 +32,7 @@ function setup (){
     createCanvas(canvasWidth, canvasHeight)
 
     circlePositions = Array.from({length: carouselImages.length}, (el, i) => {
-        const x = canvasWidth/4 + i * 50
+        const x = canvasWidth/4 + i * controlCircleSize
         const y = canvasHeight - canvasHeight/6
         return {
             x,y
@@ -88,13 +88,24 @@ function draw(){
 }
 
 function mousePressed(){
-    
+    checkCircles(mouseX, mouseY)
     if(mouseX > rightArrowPosition.x &&
         mouseX < rightArrowPosition.x + rightArrowWidth &&
         mouseY > rightArrowPosition.y &&
         mouseY < rightArrowPosition.y + rightArrowHeight){
             counter++
         }
+}
+
+const checkCircles = (mX, mY) => {
+    circlePositions.forEach((circlePosition, idx) => {
+        if(mouseX > circlePosition.x - controlCircleSize/2 &&
+            mouseX < circlePosition.x + controlCircleSize/2 &&
+            mouseY > circlePosition.y - controlCircleSize/2 &&
+            mouseY < circlePosition.y + controlCircleSize/2){
+                counter = idx
+            }
+    })
 }
 
 
